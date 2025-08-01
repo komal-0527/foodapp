@@ -1,0 +1,78 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | FoodOnline</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-gray-100 font-sans flex items-center justify-center min-h-screen"
+  >
+    <div class="w-full max-w-md bg-white p-8 rounded shadow">
+      <h2 class="text-2xl font-bold text-center text-red-500 mb-6">
+        Login to FoodExpress
+      </h2>
+
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium">Username</label>
+          <input
+            type="text"
+            id="username"
+            required
+            class="w-full px-4 py-2 border rounded focus:outline-none"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Password</label>
+          <input
+            type="password"
+            id="password"
+            required
+            class="w-full px-4 py-2 border rounded focus:outline-none"
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded font-semibold"
+        >
+          Login
+        </button>
+      </form>
+
+      <p id="errorMsg" class="text-red-500 text-sm text-center mt-4 hidden">
+        Invalid username or password.
+      </p>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+      const form = document.getElementById("loginForm");
+      const errorMsg = document.getElementById("errorMsg");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        const user = users.find(
+          (u) => u.username === username && u.password === password
+        );
+
+        if (user) {
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          if (user.role === "admin") {
+            window.location.href = "admin.html";
+          } else {
+            window.location.href = "menu.html";
+          }
+        } else {
+          errorMsg.classList.remove("hidden");
+        }
+      });
+    </script>
+  </body>
+</html>
